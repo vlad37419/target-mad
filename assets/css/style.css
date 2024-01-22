@@ -336,9 +336,8 @@ textarea.form__field {
 
 .form__policy {
     color: #808080;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 15px;
+    font-size: 10px;
+    line-height: 16px
 }
 
 .form__policy a {
@@ -380,11 +379,50 @@ textarea.form__field {
     margin-bottom: 20px;
 }
 
+.section-title {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 46px;
+    margin-bottom: 60px;
+}
+
 .section-descr {
     font-size: 16px;
     line-height: 22px;
     color: #fff;
     margin-bottom: 40px;
+}
+
+.section-offset {
+    padding: 80px 0;
+}
+
+.grid-3-20-20 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.main-form {
+    padding: 20px 30px;
+    background-color: #fff;
+    box-shadow: 8px 8px 32px 0px rgba(20, 48, 18, 0.10);
+    border-radius: 30px;
+}
+
+.main-form__title {
+    font-family: "Exo 2";
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    margin-bottom: 20px;
+}
+
+.main-form__wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
 }
 
 @media (min-width: 1025px) {
@@ -435,6 +473,47 @@ textarea.form__field {
         grid-column-start: initial;
         grid-column-end: initial;
     }
+
+    .page-title {
+        font-size: 32px;
+        line-height: 36px;
+        margin-bottom: 20px;
+    }
+
+    .section-title {
+        font-size: 32px;
+        line-height: 38px;
+        margin-bottom: 40px;
+    }
+
+    .section-descr {
+        font-size: 14px;
+        line-height: 20px;
+        margin-bottom: 30px;
+    }
+
+    .section-offset {
+        padding: 40px 0;
+    }
+
+    .grid-3-20-20 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .main-form {
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+
+    .main-form__wrapper {
+        grid-template-columns: initial;
+    }
+}
+
+@media (max-width: 575px) {
+    .grid-3-20-20 {
+        grid-template-columns: initial;
+    }
 }
 
 /* header */
@@ -442,6 +521,7 @@ textarea.form__field {
     padding-bottom: 8px;
     position: sticky;
     top: 0;
+    z-index: 1000;
     background-color: #fff;
 }
 
@@ -774,7 +854,7 @@ textarea.form__field {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: #DBE2E7;
+        background-color: #F5F7F9;
         display: block;
         padding: 30px 16px 60px;
         overflow: auto;
@@ -990,5 +1070,78 @@ textarea.form__field {
 }
 
 .promo__form {
-    max-width: 576px;
+    max-width: 620px;
+}
+
+@media (max-width: 1024px) {
+    .promo__wrapper {
+        padding: 40px 14px 14px;
+        border-radius: 30px;
+    }
+
+    .promo__title {
+        padding: 0 10px;
+        max-width: initial;
+    }
+
+    .promo__descr {
+        padding: 0 10px;
+        max-width: initial;
+    }
+
+    .promo__form {
+        max-width: initial;
+    }
+}
+
+/* about */
+.about__descr {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 36px;
+    text-align: center;
+    max-width: 1046px;
+    margin: 0 auto;
+}
+
+.about__descr_high {
+    color: #4BB08C;
+}
+
+@media (max-width: 1024px) {
+    .about__descr {
+        text-align: initial;
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
+
+/* advantages */
+.advantage {
+    padding: 30px;
+    box-shadow: 8px 8px 32px 0px rgba(20, 48, 18, 0.10);
+    background-color: #fff;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.advantage__title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    margin-bottom: 10px;
+}
+
+.advantage__text {
+    flex-grow: 1;
+    color: rgba(0, 0, 0, 0.50);
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 12px;
+}
+
+.advantage__icon-wrapper {
+    display: flex;
+    justify-content: flex-end;
 }
