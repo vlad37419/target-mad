@@ -178,6 +178,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     prevEl: doctorsThumbsSlider.closest('.slider-wrapper').querySelector('.slider-btn_prev'),
                     nextEl: doctorsThumbsSlider.closest('.slider-wrapper').querySelector('.slider-btn_next'),
                 },
+                breakpoints: {
+                    0: {
+                        slidesPerView: 1,
+                    },
+                    1025: {
+                        slidesPerView: 5,
+                    },
+                }
             });
 
             const doctorsContents = new Swiper(doctorsContentSlider, {
@@ -186,14 +194,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 fadeEffect: {
                     crossFade: true
                 },
+                touchRatio: false,
+                breakpoints: {
+                    0: {
+                        touchRatio: true,
+                    },
+                    1025: {
+                        touchRatio: false,
+                    },
+                }
             });
 
             const sliderImages = new Swiper(doctorsImageSlider, {
                 spaceBetween: 18,
                 effect: 'fade',
                 fadeEffect: {
-                    crossFade: true
+                    crossFade: true,
                 },
+                touchRatio: false,
             });
 
             if (doctorsThumbsSlidesList.length > 0) {
@@ -204,6 +222,20 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 }
             }
+
+            doctorsThumbs.on('slideChange', function () {
+                if (window.innerWidth <= 1024) {
+                    const index = doctorsThumbs.activeIndex;
+                    doctorsContents.slideTo(index);
+                }
+            });
+
+            doctorsContents.on('slideChange', function () {
+                if (window.innerWidth <= 1024) {
+                    const index = doctorsContents.activeIndex;
+                    doctorsThumbs.slideTo(index);
+                }
+            });
         });
     }
 
