@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (openDropdownBtnList.length > 0) {
         openDropdownBtnList.forEach((btn) => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 btn.closest('.menu-item').classList.toggle('active');
             });
         });
@@ -159,6 +159,53 @@ document.addEventListener('DOMContentLoaded', function () {
             menuClose(header);
         })
     });
+
+    // doctors sliders
+    const doctorsBlockSlider = document.querySelectorAll('.doctors_sliders');
+
+    if (doctorsBlockSlider.length) {
+        doctorsBlockSlider.forEach((block) => {
+            const doctorsImageSlider = block.querySelector('.doctors__image-slider');
+            const doctorsContentSlider = block.querySelector('.doctors__content-slider');
+            const doctorsThumbsSlider = block.querySelector('.doctors__thumbs-slider');
+
+            const doctorsThumbsSlidesList = doctorsThumbsSlider.querySelectorAll('.swiper-slide');
+
+            const doctorsThumbs = new Swiper(doctorsThumbsSlider, {
+                spaceBetween: 18,
+                slidesPerView: 5,
+                navigation: {
+                    prevEl: doctorsThumbsSlider.closest('.slider-wrapper').querySelector('.slider-btn_prev'),
+                    nextEl: doctorsThumbsSlider.closest('.slider-wrapper').querySelector('.slider-btn_next'),
+                },
+            });
+
+            const doctorsContents = new Swiper(doctorsContentSlider, {
+                spaceBetween: 18,
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
+            });
+
+            const sliderImages = new Swiper(doctorsImageSlider, {
+                spaceBetween: 18,
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
+            });
+
+            if (doctorsThumbsSlidesList.length > 0) {
+                for (let i = 0; i < doctorsThumbsSlidesList.length; i += 1) {
+                    doctorsThumbsSlidesList[i].addEventListener('click', function () {
+                        doctorsContents.slideTo(i);
+                        sliderImages.slideTo(i);
+                    });
+                }
+            }
+        });
+    }
 
     AOS.init({
         once: true,
