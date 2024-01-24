@@ -199,7 +199,6 @@ main {
     margin: 0 auto;
 }
 
-/* glob */
 .btn {
     display: flex;
     align-items: center;
@@ -687,6 +686,73 @@ textarea.form__field {
     align-items: center;
 }
 
+.breadcrumbs {
+    padding: 10px 0;
+}
+
+.breadcrumbs__list {
+    display: flex;
+    gap: 4px;
+}
+
+.breadcrumbs__link {
+    padding: 4px 10px;
+    border-radius: 20px;
+    background-color: #F5F7F9;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.breadcrumbs__link_active {
+    background-color: #F5F7F9;
+}
+
+.breadcrumbs__link-text {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    color: #4BB08C;
+}
+
+.breadcrumbs__link_active .breadcrumbs__link-text {
+    color: rgba(84, 84, 84, 0.50);
+}
+
+.breadcrumbs__link-arrow {
+    flex: 0 0 10px;
+    width: 10px;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.block-link {
+    padding: 30px;
+    box-shadow: 8px 8px 32px 0px rgba(20, 48, 18, 0.10);
+    background-color: #fff;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border: 2px solid #fff;
+    transition: border-color .2s ease;
+}
+
+.block-link__title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    color: #000;
+}
+
+.block-link__arrow {
+    display: flex;
+    align-items: center;
+}
+
 @media (min-width: 1025px) {
     .btn:hover {
         background-color: #01764C;
@@ -719,6 +785,10 @@ textarea.form__field {
     .photo-zoom:hover::after {
         opacity: 1;
         pointer-events: all;
+    }
+
+    .block-link:hover {
+        border-color: #4BB08C;
     }
 }
 
@@ -2166,38 +2236,6 @@ textarea.form__field {
 @media (max-width: 1024px) {
     .map__item {
         border-radius: 30px;
-    }
-}
-
-/* filials */
-.filial {
-    padding: 30px;
-    box-shadow: 8px 8px 32px 0px rgba(20, 48, 18, 0.10);
-    background-color: #fff;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    border: 2px solid #fff;
-    transition: border-color .2s ease;
-}
-
-.filial__title {
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 24px;
-    color: #000;
-}
-
-.filial__arrow {
-    display: flex;
-    align-items: center;
-}
-
-@media (min-width: 1025px) {
-    .filial:hover {
-        border-color: #4BB08C;
     }
 }
 
