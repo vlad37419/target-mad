@@ -8,11 +8,55 @@
     <link rel="stylesheet" href="assets/css/normalize.css">
     <link rel="stylesheet" href="assets/css/build/aos.css">
     <link rel="stylesheet" href="assets/css/build/swiper.css">
+    <link rel="stylesheet" href="assets/css/build/fancybox.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <script defer src="assets/js/build/aos.js"></script>
     <script defer src="assets/js/build/mask.js"></script>
     <script defer src="assets/js/build/swiper.js"></script>
+    <script defer src="assets/js/build/fancybox.js"></script>
     <script defer src="assets/js/main.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            let flagMap = false;
+            document.addEventListener('scroll', function () {
+                const blockMap = document.getElementById('map');
+                const posTop = blockMap.getBoundingClientRect().top;
+
+                if (posTop < window.innerHeight && !flagMap) {
+                    if (!document.querySelector('[src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&lang=ru_RU"]')) {
+                        const script = document.createElement('script');
+                        script.type = 'text/javascript';
+                        script.src = 'https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&lang=ru_RU';
+                        document.head.appendChild(script);
+                    }
+
+                    ymaps.ready(init);
+
+                    function init() {
+                        const map = document.querySelector('#map');
+
+                        if (map) {
+                            var myMap = new ymaps.Map("map", {
+                                center: [47.228163, 39.714641],
+                                zoom: 14,
+                            });
+
+                            var myPlacemark = new ymaps.Placemark([47.228163, 39.714641], {}, {
+                                iconLayout: 'default#image',
+                                iconImageHref: 'assets/img/icons/map-marker.svg',
+                                iconImageSize: [30, 30],
+                            });
+
+                            myMap.geoObjects.add(myPlacemark);
+                            myMap.behaviors.disable('scrollZoom');
+                        }
+                    }
+
+                    flagMap = true;
+                }
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -663,7 +707,7 @@
                 </div>
             </div>
             <div class="header__connection">
-                <button class="header__connection-btn" data-aos="zoom-in" data-aos-duration="600">
+                <div class="header__connection-btn" data-aos="zoom-in" data-aos-duration="600">
                     <img src="assets/img/icons/geo.svg" alt="" class="header__connection-icon"
                         aria-label="presentation">
                     <div class="header__connection-btn-wrapper">
@@ -674,7 +718,7 @@
                             – Круглосуточно, выезд 24/7
                         </span>
                     </div>
-                </button>
+                </div>
                 <a href="tel:+79993331074" class="header__connection-btn" data-aos="zoom-in" data-aos-duration="600">
                     <img src="assets/img/icons/phone.svg" alt="" class="header__connection-icon"
                         aria-label="presentation">
@@ -697,7 +741,7 @@
                     <h1 class="promo__title page-title">
                         Наркологическая клиника в Москве
                     </h1>
-                    <p class="promo__descr section-descr">
+                    <p class="promo__descr section-descr section-descr_white">
                         Лечение алкоголизма, наркомании, психотерапия зависимостей в наркологической клинике «Цель» в
                         Москве.
                     </p>
@@ -1243,8 +1287,836 @@
                 </div>
             </div>
         </section>
+        <section class="work section-offset" data-aos="fade-up" data-aos-duration="600">
+            <div class="work__container container">
+                <div class="work__wrapper">
+                    <h2 class="work__title section-title section-title_white">
+                        Как мы работаем
+                    </h2>
+                    <div class="work__items">
+                        <div class="work__item">
+                            <p class="work__item-num">
+                                1
+                            </p>
+                            <p class="work__item-text">
+                                Поступление заявки
+                            </p>
+                        </div>
+                        <div class="work__item">
+                            <p class="work__item-num">
+                                2
+                            </p>
+                            <p class="work__item-text">
+                                Сбор анамнеза и назначение лечения
+                            </p>
+                        </div>
+                        <div class="work__item">
+                            <p class="work__item-num">
+                                3
+                            </p>
+                            <p class="work__item-text">
+                                Выезд врача
+                                на дом
+                            </p>
+                        </div>
+                        <div class="work__item">
+                            <p class="work__item-num">
+                                4
+                            </p>
+                            <p class="work__item-text">
+                                Оплата перед процедурами
+                            </p>
+                        </div>
+                        <div class="work__item">
+                            <p class="work__item-num">
+                                5
+                            </p>
+                            <p class="work__item-text">
+                                Оказание медпомощи
+                            </p>
+                        </div>
+                        <div class="work__item">
+                            <p class="work__item-num">
+                                6
+                            </p>
+                            <p class="work__item-text">
+                                Звонок отдела качества
+                            </p>
+                        </div>
+                    </div>
+                    <form class="work__form main-form form">
+                        <p class="main-form__title">
+                            Заполните форму и мы вам перезвоним
+                        </p>
+                        <div class="main-form__wrapper">
+                            <label class="main-form__label">
+                                <input type="text" class="main-form__input form__field" placeholder="Ваше имя">
+                            </label>
+                            <label class="main-form__label">
+                                <input type="tel" class="main-form__input form__field" placeholder="Номер телефона">
+                            </label>
+                            <button type="submit" class="main-form__btn btn">Получить помощь</button>
+                        </div>
+                        <p class="form__policy">
+                            Отправляя заявку, Вы даете согласие с условиями обработки персональных данных,
+                            установленными
+                            <a href="/o-klinike/politika-konfidentsialnosti/">Политикой конфиденциальности</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="steps section-offset" data-aos="fade-up" data-aos-duration="600">
+            <div class="steps__container container">
+                <h2 class="steps__title section-title">
+                    Этапы лечения в наркологической клинике
+                </h2>
+                <p class="steps__descr section-descr">
+                    Алкоголизм и наркомания — тяжёлые формы зависимости, способы лечения которых состоят из следующих
+                    этапов.
+                </p>
+                <div class="steps__wrapper grid-3-20-20">
+                    <div class="steps__item step">
+                        <picture class="step__picture">
+                            <img src="assets/img/sections/steps/1.png" alt="" class="step__img">
+                        </picture>
+                        <div class="step__info">
+                            <p class="step__num">
+                                1 этап:
+                            </p>
+                            <p class="step__title">
+                                Детоксикация
+                            </p>
+                            <div class="step__content content-body">
+                                <p>
+                                    Терапия начинается с очищения организма от токсинов психоактивных веществ. Только
+                                    когда
+                                    кровь человека очистится от вредных соединений, можно приступать к дальнейшему
+                                    лечению.
+                                    При этом также происходит снятие симптомов абстинентного синдрома — похмелья или
+                                    наркотической ломки.
+                                </p>
+                            </div>
+                            <a href="" class="step__link link">
+                                <span class="link__text">
+                                    Подробнее
+                                </span>
+                                <span class="link__arrow">
+                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12.0219 6.35827C11.8089 6.14526 11.4635 6.14526 11.2505 6.35827L7.99982 9.60894L4.74915 6.35827C4.53614 6.14526 4.19078 6.14526 3.97776 6.35827C3.76475 6.57128 3.76475 6.91664 3.97776 7.12966L7.61413 10.766C7.82714 10.979 8.1725 10.979 8.38552 10.766L12.0219 7.12966C12.2349 6.91664 12.2349 6.57128 12.0219 6.35827Z"
+                                            fill="#4BB08C" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="steps__item step">
+                        <picture class="step__picture">
+                            <img src="assets/img/sections/steps/2.png" alt="" class="step__img">
+                        </picture>
+                        <div class="step__info">
+                            <p class="step__num">
+                                2 этап:
+                            </p>
+                            <p class="step__title">
+                                Кодирование от алкоголя или наркотиков
+                            </p>
+                            <div class="step__content content-body">
+                                <p>
+                                    Для того чтобы снять физическую тягу к психоактивным веществам, проводится
+                                    запретительная терапия, блокирующая возможность их употребления. Лечение выполняется
+                                    медикаментозно, гипнозом или внушением.
+                                </p>
+                            </div>
+                            <a href="" class="step__link link">
+                                <span class="link__text">
+                                    Подробнее
+                                </span>
+                                <span class="link__arrow">
+                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12.0219 6.35827C11.8089 6.14526 11.4635 6.14526 11.2505 6.35827L7.99982 9.60894L4.74915 6.35827C4.53614 6.14526 4.19078 6.14526 3.97776 6.35827C3.76475 6.57128 3.76475 6.91664 3.97776 7.12966L7.61413 10.766C7.82714 10.979 8.1725 10.979 8.38552 10.766L12.0219 7.12966C12.2349 6.91664 12.2349 6.57128 12.0219 6.35827Z"
+                                            fill="#4BB08C" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="steps__item step">
+                        <picture class="step__picture">
+                            <img src="assets/img/sections/steps/3.png" alt="" class="step__img">
+                        </picture>
+                        <div class="step__info">
+                            <p class="step__num">
+                                3 этап:
+                            </p>
+                            <p class="step__title">
+                                Реабилитация зависимых
+                            </p>
+                            <div class="step__content content-body">
+                                <p>
+                                    На этом этапе лечения у человека снимается психологическое влечение к алкоголю
+                                    или наркотикам.
+                                </p>
+                                <p>
+                                    Пациент помещается в условия закрытого реабилитационного центра, где проходит
+                                    индивидуальные и групповые занятия психотерапии.
+                                </p>
+                            </div>
+                            <a href="" class="step__link link">
+                                <span class="link__text">
+                                    Подробнее
+                                </span>
+                                <span class="link__arrow">
+                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12.0219 6.35827C11.8089 6.14526 11.4635 6.14526 11.2505 6.35827L7.99982 9.60894L4.74915 6.35827C4.53614 6.14526 4.19078 6.14526 3.97776 6.35827C3.76475 6.57128 3.76475 6.91664 3.97776 7.12966L7.61413 10.766C7.82714 10.979 8.1725 10.979 8.38552 10.766L12.0219 7.12966C12.2349 6.91664 12.2349 6.57128 12.0219 6.35827Z"
+                                            fill="#4BB08C" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="text-section section-offset" data-aos="fade-up" data-aos-duration="600">
+            <div class="text-section__container container">
+                <div class="text-section__top section-top">
+                    <h2 class="text-section__title section-title">
+                        Преимущества лечения в частной наркологической клинике
+                    </h2>
+                    <div class="text-section__reviewer reviewer">
+                        <picture class="reviewer__picture">
+                            <img src="assets/img/sections/doctors/1.png" alt="" class="reviewer__img">
+                        </picture>
+                        <div class="reviewer__content">
+                            <p class="reviewer__name">
+                                Редактор текста: <br>
+                                Горохов Иван Евгеньевич
+                            </p>
+                            <p class="reviewer__role">
+                                Главный врач клиники
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-section__content content-body">
+                    <p>
+                        Зависимые и даже их близкие часто не осознают всю опасность болезни, полагая, что им удастся
+                        справиться с тягой к спиртному или наркотикам самостоятельно. Однако это возможно только на
+                        ранних стадиях зависимости до формирования физического пристрастия, требуется поддержка близких
+                        и консультации специалистов. В остальных случаях получить хороший результат удастся то лько при
+                        условии госпитализации больного в платную наркологическую клинику.
+                    </p>
+                    <p>
+                        При выборе наркологической клиники, где зависимый будет проходить комплексное обследование и
+                        лечение, родственники и сами пациенты чаще предпочитают лечиться в частном платном центре. Это
+                        связано со следующими преимуществами коммерческих больниц.
+                    </p>
+                    <ul>
+                        <li>
+                            <b>Гарантия полной конфиденциальности.</b> Частные наркологические клиники сохраняют
+                            анонимность
+                            своих пациентов. При этом отправка в государственную больницу означает для наркозависимого
+                            или алкоголика, что его обязательно поставят на учёт в наркологический диспансер, из-за чего
+                            в будущем возникнут сложности с поиском работы, получением водительских прав. В частной
+                            наркологической клинике информация о больном не покидает стен учреждения.
+                        </li>
+                        <li>
+                            <b>Врачи круглосуточно выезжают на дом к пациенту</b> для оказания скорой наркологической
+                            помощи
+                            больным алкоголизмом или наркоманией. Выезд специалистов можно организовать по всей области.
+                            Нарколог по городу приезжает в течение 30–40 минут.
+                        </li>
+                        <li>
+                            <b>В штате частной клиники работают опытные персоналы</b> и врачи разных профильных
+                            специальностей. Наши специалисты индивидуально подбирают методику лечения и медикаменты,
+                            опираясь на результаты диагностики и сбор анамнеза, что позволяет учесть каждый клинический
+                            случай — стаж употребления, физические и психологические особенности человека.
+                            Индивидуальный подход помогает проводить лечение эффективно.
+                        </li>
+                        <li>
+                            <b>Если состояние больного не вызывает серьёзных опасений, терапия проводится на дому.</b> В
+                            привычной обстановке человек быстрее восстанавливается, оставаясь в психологически
+                            комфортных условиях.
+                        </li>
+                        <li>
+                            <b>В анонимном специализированном стационаре больного определяют в комфортабельную
+                                палату.</b>
+                            Здесь человек находится под круглосуточным медицинским наблюдением. Рядом постоянно врачи с
+                            необходимыми лекарственными средствами и новым оборудованием, готовые к оказанию плановой и
+                            реанимационной терапии.
+                        </li>
+                    </ul>
+                    <p>
+                        Наркологическая клиника «Цель» работает без выходных и в праздничные дни по утверждённым
+                        минздравом программам лечения. У нас доступные цены, стоимость одной процедуры от нескольких
+                        тысяч рублей. Нам доверяют, о чём можно судить по высокому рейтингу организации, составленному
+                        на основании множества положительных отзывов.
+                    </p>
+                    <p>
+                        <b>
+                            Также предлагается:
+                        </b>
+                    </p>
+                    <ol>
+                        <li>амбулаторная и стационарная терапия;</li>
+                        <li>медицинская интервенция — психологическая беседа с зависимым, мотивирующая на лечение;</li>
+                        <li>лечение поведенческих зависимостей — игромании, лудомании, шопоголизма и других аддикций;
+                        </li>
+                        <li>психотерапия — лечение депрессии, панических атак, неврозов, анорексии, последствий стресса,
+                            психических заболеваний.</li>
+                    </ol>
+                    <blockquote>
+                        Чтобы получить бесплатную предварительную консультацию, узнать больше об услугах наркологической
+                        клиники или заказать вызов нарколога на дом, звоните круглосуточно по телефону горячей линии:
+                        <a href="tel:88007078534">8 (800) 707-85-34</a> или
+                        просто оставьте заявку на сайте.
+                    </blockquote>
+                    <iframe class="video" src="https://www.youtube.com/embed/XbGs_qK2PQA?si=1dppo_w0XrddNSgA"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </section>
+        <section class="documents section-offset" data-aos="fade-up" data-aos-duration="600">
+            <div class="documents__container container">
+                <div class="documents__wrapper">
+                    <div class="documents__content">
+                        <div class="documents__info">
+                            <h2 class="documents__title section-title">
+                                Наши лицензии
+                            </h2>
+                            <div class="documents__info-body content-body">
+                                <p>
+                                    Деятельность клиники «Цель» полностью лицензирована, а эффективность работы доказана
+                                    сотнями здоровых пациентов.
+                                </p>
+                                <p>
+                                    Мы работаем над тем, чтобы более 95% наших пациентов и их родственников оставались
+                                    довольными лечением в наркологической клинике «Цель».
+                                </p>
+                            </div>
+                        </div>
+                        <div class="documents__slider-container slider-wrapper">
+                            <div class="documents__slider swiper">
+                                <div class="documents__slider-wrapper swiper-wrapper">
+                                    <a href="assets/img/sections/documents/1.png" data-fancybox="documents"
+                                        class="documents__slide document photo-zoom swiper-slide">
+                                        <img src="assets/img/sections/documents/1.png" alt="" class="document__img">
+                                    </a>
+                                    <a href="assets/img/sections/documents/1.png" data-fancybox="documents"
+                                        class="documents__slide document photo-zoom swiper-slide">
+                                        <img src="assets/img/sections/documents/1.png" alt="" class="document__img">
+                                    </a>
+                                    <a href="assets/img/sections/documents/1.png" data-fancybox="documents"
+                                        class="documents__slide document photo-zoom swiper-slide">
+                                        <img src="assets/img/sections/documents/1.png" alt="" class="document__img">
+                                    </a>
+                                    <a href="assets/img/sections/documents/1.png" data-fancybox="documents"
+                                        class="documents__slide document photo-zoom swiper-slide">
+                                        <img src="assets/img/sections/documents/1.png" alt="" class="document__img">
+                                    </a>
+                                    <a href="assets/img/sections/documents/1.png" data-fancybox="documents"
+                                        class="documents__slide document photo-zoom swiper-slide">
+                                        <img src="assets/img/sections/documents/1.png" alt="" class="document__img">
+                                    </a>
+                                    <a href="assets/img/sections/documents/1.png" data-fancybox="documents"
+                                        class="documents__slide document photo-zoom swiper-slide">
+                                        <img src="assets/img/sections/documents/1.png" alt="" class="document__img">
+                                    </a>
+                                </div>
+                            </div>
+                            <button
+                                class="documents__slider-btn documents__slider-btn_prev slider-btn slider-btn_color slider-btn_prev">
+                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M15.3063 18.5951C15.6259 18.2756 15.6259 17.7575 15.3063 17.438L10.4303 12.562L15.3063 7.68598C15.6259 7.36646 15.6259 6.84842 15.3063 6.5289C14.9868 6.20938 14.4688 6.20938 14.1493 6.5289L8.69472 11.9834C8.3752 12.303 8.3752 12.821 8.69472 13.1405L14.1493 18.5951C14.4688 18.9146 14.9868 18.9146 15.3063 18.5951Z"
+                                        fill="white" />
+                                </svg>
+                            </button>
+                            <button
+                                class="documents__slider-btn documents__slider-btn_next slider-btn slider-btn_color slider-btn_next">
+                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M8.69365 6.52895C8.37413 6.84847 8.37413 7.36651 8.69365 7.68603L13.5697 12.562L8.69365 17.438C8.37413 17.7576 8.37413 18.2756 8.69365 18.5951C9.01317 18.9146 9.53122 18.9146 9.85074 18.5951L15.3053 13.1406C15.6248 12.8211 15.6248 12.303 15.3053 11.9835L9.85074 6.52895C9.53122 6.20943 9.01317 6.20943 8.69365 6.52895Z"
+                                        fill="white" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="callback section-offset" data-aos="fade-up" data-aos-duration="600">
+            <div class="callback__container container">
+                <div class="callback__wrapper">
+                    <h2 class="callback__title section-title section-title_white">
+                        Заполните форму и мы вам перезвоним
+                    </h2>
+                    <form class="callback__form main-form form">
+                        <div class="main-form__wrapper">
+                            <label class="main-form__label">
+                                <input type="text" class="main-form__input form__field" placeholder="Ваше имя">
+                            </label>
+                            <label class="main-form__label">
+                                <input type="tel" class="main-form__input form__field" placeholder="Номер телефона">
+                            </label>
+                            <button type="submit" class="main-form__btn btn">Получить помощь</button>
+                        </div>
+                        <p class="form__policy">
+                            Отправляя заявку, Вы даете согласие с условиями обработки персональных данных,
+                            установленными
+                            <a href="/o-klinike/politika-konfidentsialnosti/">Политикой конфиденциальности</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="reviews section-offset" data-aos="fade-up" data-aos-duration="600">
+            <div class="reviews__container container slider-wrapper">
+                <div class="reviews__top section-top">
+                    <h2 class="reviews__title section-title">
+                        Отзывы наших пациентов
+                    </h2>
+                    <div class="reviews__slider-btns slider-btns">
+                        <button
+                            class="reviews__slider-btn reviews__slider-btn_prev slider-btn slider-btn_color slider-btn_prev">
+                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M15.3063 18.5951C15.6259 18.2756 15.6259 17.7575 15.3063 17.438L10.4303 12.562L15.3063 7.68598C15.6259 7.36646 15.6259 6.84842 15.3063 6.5289C14.9868 6.20938 14.4688 6.20938 14.1493 6.5289L8.69472 11.9834C8.3752 12.303 8.3752 12.821 8.69472 13.1405L14.1493 18.5951C14.4688 18.9146 14.9868 18.9146 15.3063 18.5951Z"
+                                    fill="white" />
+                            </svg>
+                        </button>
+                        <button
+                            class="reviews__slider-btn reviews__slider-btn_next slider-btn slider-btn_color slider-btn_next">
+                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M8.69365 6.52895C8.37413 6.84847 8.37413 7.36651 8.69365 7.68603L13.5697 12.562L8.69365 17.438C8.37413 17.7576 8.37413 18.2756 8.69365 18.5951C9.01317 18.9146 9.53122 18.9146 9.85074 18.5951L15.3053 13.1406C15.6248 12.8211 15.6248 12.303 15.3053 11.9835L9.85074 6.52895C9.53122 6.20943 9.01317 6.20943 8.69365 6.52895Z"
+                                    fill="white" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="reviews__slider swiper">
+                    <div class="reviews__slider-wrapper swiper-wrapper">
+                        <div class="reviews__slide review swiper-slide">
+                            <span class="review__decor">
+                                <span class="review__decor-line"></span>
+                            </span>
+                            <p class="review__name">
+                                Константин А.
+                            </p>
+                            <p class="review__descr">
+                                Не считаю себя алкоголиком, но
+                                периодически срываюсь в запои. В таких
+                                ситуациях жена постоянно обращается в
+                                Не считаю себя алкоголиком, но
+                                периодически срываюсь в запои. В таких
+                                ситуациях жена постоянно обращается в
+                            </p>
+                            <a href="#" class="step__link link">
+                                <span class="link__text">
+                                    Подробнее
+                                </span>
+                                <span class="link__arrow">
+                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12.0219 6.35827C11.8089 6.14526 11.4635 6.14526 11.2505 6.35827L7.99982 9.60894L4.74915 6.35827C4.53614 6.14526 4.19078 6.14526 3.97776 6.35827C3.76475 6.57128 3.76475 6.91664 3.97776 7.12966L7.61413 10.766C7.82714 10.979 8.1725 10.979 8.38552 10.766L12.0219 7.12966C12.2349 6.91664 12.2349 6.57128 12.0219 6.35827Z"
+                                            fill="#4BB08C" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="reviews__slide review swiper-slide">
+                            <span class="review__decor">
+                                <span class="review__decor-line"></span>
+                            </span>
+                            <p class="review__name">
+                                Константин А.
+                            </p>
+                            <p class="review__descr">
+                                Не считаю себя алкоголиком, но
+                                периодически срываюсь в запои. В таких
+                                ситуациях жена постоянно обращается в
+                            </p>
+                            <a href="#" class="step__link link">
+                                <span class="link__text">
+                                    Подробнее
+                                </span>
+                                <span class="link__arrow">
+                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12.0219 6.35827C11.8089 6.14526 11.4635 6.14526 11.2505 6.35827L7.99982 9.60894L4.74915 6.35827C4.53614 6.14526 4.19078 6.14526 3.97776 6.35827C3.76475 6.57128 3.76475 6.91664 3.97776 7.12966L7.61413 10.766C7.82714 10.979 8.1725 10.979 8.38552 10.766L12.0219 7.12966C12.2349 6.91664 12.2349 6.57128 12.0219 6.35827Z"
+                                            fill="#4BB08C" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="reviews__slide review swiper-slide">
+                            <span class="review__decor">
+                                <span class="review__decor-line"></span>
+                            </span>
+                            <p class="review__name">
+                                Константин А.
+                            </p>
+                            <p class="review__descr">
+                                Не считаю себя алкоголиком, но
+                                периодически срываюсь в запои. В таких
+                                ситуациях жена постоянно обращается в
+                            </p>
+                            <a href="#" class="step__link link">
+                                <span class="link__text">
+                                    Подробнее
+                                </span>
+                                <span class="link__arrow">
+                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12.0219 6.35827C11.8089 6.14526 11.4635 6.14526 11.2505 6.35827L7.99982 9.60894L4.74915 6.35827C4.53614 6.14526 4.19078 6.14526 3.97776 6.35827C3.76475 6.57128 3.76475 6.91664 3.97776 7.12966L7.61413 10.766C7.82714 10.979 8.1725 10.979 8.38552 10.766L12.0219 7.12966C12.2349 6.91664 12.2349 6.57128 12.0219 6.35827Z"
+                                            fill="#4BB08C" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="reviews__slide review swiper-slide">
+                            <span class="review__decor">
+                                <span class="review__decor-line"></span>
+                            </span>
+                            <p class="review__name">
+                                Константин А.
+                            </p>
+                            <p class="review__descr">
+                                Не считаю себя алкоголиком, но
+                                периодически срываюсь в запои. В таких
+                                ситуациях жена постоянно обращается в
+                            </p>
+                            <a href="#" class="step__link link">
+                                <span class="link__text">
+                                    Подробнее
+                                </span>
+                                <span class="link__arrow">
+                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12.0219 6.35827C11.8089 6.14526 11.4635 6.14526 11.2505 6.35827L7.99982 9.60894L4.74915 6.35827C4.53614 6.14526 4.19078 6.14526 3.97776 6.35827C3.76475 6.57128 3.76475 6.91664 3.97776 7.12966L7.61413 10.766C7.82714 10.979 8.1725 10.979 8.38552 10.766L12.0219 7.12966C12.2349 6.91664 12.2349 6.57128 12.0219 6.35827Z"
+                                            fill="#4BB08C" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="reviews__slide review swiper-slide">
+                            <span class="review__decor">
+                                <span class="review__decor-line"></span>
+                            </span>
+                            <p class="review__name">
+                                Константин А.
+                            </p>
+                            <p class="review__descr">
+                                Не считаю себя алкоголиком, но
+                                периодически срываюсь в запои. В таких
+                                ситуациях жена постоянно обращается в
+                            </p>
+                            <a href="#" class="step__link link">
+                                <span class="link__text">
+                                    Подробнее
+                                </span>
+                                <span class="link__arrow">
+                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12.0219 6.35827C11.8089 6.14526 11.4635 6.14526 11.2505 6.35827L7.99982 9.60894L4.74915 6.35827C4.53614 6.14526 4.19078 6.14526 3.97776 6.35827C3.76475 6.57128 3.76475 6.91664 3.97776 7.12966L7.61413 10.766C7.82714 10.979 8.1725 10.979 8.38552 10.766L12.0219 7.12966C12.2349 6.91664 12.2349 6.57128 12.0219 6.35827Z"
+                                            fill="#4BB08C" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="reviews__slide review swiper-slide">
+                            <span class="review__decor">
+                                <span class="review__decor-line"></span>
+                            </span>
+                            <p class="review__name">
+                                Константин А.
+                            </p>
+                            <p class="review__descr">
+                                Не считаю себя алкоголиком, но
+                                периодически срываюсь в запои. В таких
+                                ситуациях жена постоянно обращается в
+                            </p>
+                            <a href="#" class="step__link link">
+                                <span class="link__text">
+                                    Подробнее
+                                </span>
+                                <span class="link__arrow">
+                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12.0219 6.35827C11.8089 6.14526 11.4635 6.14526 11.2505 6.35827L7.99982 9.60894L4.74915 6.35827C4.53614 6.14526 4.19078 6.14526 3.97776 6.35827C3.76475 6.57128 3.76475 6.91664 3.97776 7.12966L7.61413 10.766C7.82714 10.979 8.1725 10.979 8.38552 10.766L12.0219 7.12966C12.2349 6.91664 12.2349 6.57128 12.0219 6.35827Z"
+                                            fill="#4BB08C" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="map section-offset" data-aos="fade-up" data-aos-duration="600">
+            <div class="map__container container">
+                <div id="map" class="map__item"></div>
+            </div>
+        </div>
+        <section class="filials section-offset" data-aos="fade-up" data-aos-duration="600">
+            <div class="filials__container container">
+                <h2 class="filials__title section-title">
+                    Филиалы в других городах
+                </h2>
+                <div class="filials__wrapper grid-3-20-20">
+                    <a href="#" class="filials__item filial">
+                        <p class="filial__title">
+                            Москва
+                        </p>
+                        <span class="filial__arrow">
+                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M8.69365 6.8351C8.37413 7.15462 8.37413 7.67266 8.69365 7.99218L13.5697 12.8682L8.69365 17.7442C8.37413 18.0637 8.37413 18.5818 8.69365 18.9013C9.01317 19.2208 9.53122 19.2208 9.85074 18.9013L15.3053 13.4467C15.6248 13.1272 15.6248 12.6092 15.3053 12.2896L9.85074 6.8351C9.53122 6.51558 9.01317 6.51558 8.69365 6.8351Z"
+                                    fill="#4BB08C" />
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="#" class="filials__item filial">
+                        <p class="filial__title">
+                            Санкт-Петербург
+                        </p>
+                        <span class="filial__arrow">
+                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M8.69365 6.8351C8.37413 7.15462 8.37413 7.67266 8.69365 7.99218L13.5697 12.8682L8.69365 17.7442C8.37413 18.0637 8.37413 18.5818 8.69365 18.9013C9.01317 19.2208 9.53122 19.2208 9.85074 18.9013L15.3053 13.4467C15.6248 13.1272 15.6248 12.6092 15.3053 12.2896L9.85074 6.8351C9.53122 6.51558 9.01317 6.51558 8.69365 6.8351Z"
+                                    fill="#4BB08C" />
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="#" class="filials__item filial">
+                        <p class="filial__title">
+                            Казань
+                        </p>
+                        <span class="filial__arrow">
+                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M8.69365 6.8351C8.37413 7.15462 8.37413 7.67266 8.69365 7.99218L13.5697 12.8682L8.69365 17.7442C8.37413 18.0637 8.37413 18.5818 8.69365 18.9013C9.01317 19.2208 9.53122 19.2208 9.85074 18.9013L15.3053 13.4467C15.6248 13.1272 15.6248 12.6092 15.3053 12.2896L9.85074 6.8351C9.53122 6.51558 9.01317 6.51558 8.69365 6.8351Z"
+                                    fill="#4BB08C" />
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="#" class="filials__item filial">
+                        <p class="filial__title">
+                            Казань
+                        </p>
+                        <span class="filial__arrow">
+                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M8.69365 6.8351C8.37413 7.15462 8.37413 7.67266 8.69365 7.99218L13.5697 12.8682L8.69365 17.7442C8.37413 18.0637 8.37413 18.5818 8.69365 18.9013C9.01317 19.2208 9.53122 19.2208 9.85074 18.9013L15.3053 13.4467C15.6248 13.1272 15.6248 12.6092 15.3053 12.2896L9.85074 6.8351C9.53122 6.51558 9.01317 6.51558 8.69365 6.8351Z"
+                                    fill="#4BB08C" />
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="#" class="filials__item filial">
+                        <p class="filial__title">
+                            Москва
+                        </p>
+                        <span class="filial__arrow">
+                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M8.69365 6.8351C8.37413 7.15462 8.37413 7.67266 8.69365 7.99218L13.5697 12.8682L8.69365 17.7442C8.37413 18.0637 8.37413 18.5818 8.69365 18.9013C9.01317 19.2208 9.53122 19.2208 9.85074 18.9013L15.3053 13.4467C15.6248 13.1272 15.6248 12.6092 15.3053 12.2896L9.85074 6.8351C9.53122 6.51558 9.01317 6.51558 8.69365 6.8351Z"
+                                    fill="#4BB08C" />
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="#" class="filials__item filial">
+                        <p class="filial__title">
+                            Санкт-Петербург
+                        </p>
+                        <span class="filial__arrow">
+                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M8.69365 6.8351C8.37413 7.15462 8.37413 7.67266 8.69365 7.99218L13.5697 12.8682L8.69365 17.7442C8.37413 18.0637 8.37413 18.5818 8.69365 18.9013C9.01317 19.2208 9.53122 19.2208 9.85074 18.9013L15.3053 13.4467C15.6248 13.1272 15.6248 12.6092 15.3053 12.2896L9.85074 6.8351C9.53122 6.51558 9.01317 6.51558 8.69365 6.8351Z"
+                                    fill="#4BB08C" />
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
-    <footer class="footer"></footer>
+    <footer class="footer" data-aos="fade-up" data-aos-duration="600">
+        <div class="footer__main">
+            <div class="footer__main-container container">
+                <div class="footer__item">
+                    <a href="/" class="footer__logo logo">
+                        <img src="assets/img/logo.svg" alt="" class="logo__img">
+                    </a>
+                    <div class="footer__requisites requisites content-body">
+                        <p class="requisites__text">
+                            ООО “Наше здоровье”
+                        </p>
+                        <p class="requisites__text">
+                            ИНН: 7705550380
+                        </p>
+                        <p class="requisites__text">
+                            Лицензия: Л041-01137-77/00293272 от 25.06.2014г.
+                        </p>
+                        <p class="requisites__text">
+                            <b>
+                                Действуют мобильные медицинские бригады!
+                            </b>
+                        </p>
+                    </div>
+                    <ul class="footer__links">
+                        <li class="footer__links-item">
+                            <a href="#" class="footer__link">
+                                Политика конфиденциальности
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__item">
+                    <p class="footer__item-title">
+                        Услуги
+                    </p>
+                    <ul class="footer__links">
+                        <li class="footer__links-item">
+                            <a href="#" class="footer__link">
+                                Лечение алкоголизма
+                            </a>
+                        </li>
+                        <li class="footer__links-item">
+                            <a href="#" class="footer__link">
+                                Кодирование от алкоголизма
+                            </a>
+                        </li>
+                        <li class="footer__links-item">
+                            <a href="#" class="footer__link">
+                                Лечение наркомании
+                            </a>
+                        </li>
+                        <li class="footer__links-item">
+                            <a href="#" class="footer__link">
+                                Наркологическая помощь
+                            </a>
+                        </li>
+                        <li class="footer__links-item">
+                            <a href="#" class="footer__link">
+                                Вывод из запоя
+                            </a>
+                        </li>
+                        <li class="footer__links-item">
+                            <a href="#" class="footer__link">
+                                Реабилитационный центр
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__item">
+                    <p class="footer__item-title">
+                        Информация
+                    </p>
+                    <ul class="footer__links">
+                        <li class="footer__links-item">
+                            <a href="#" class="footer__link">
+                                Цены
+                            </a>
+                        </li>
+                        <li class="footer__links-item">
+                            <a href="#" class="footer__link">
+                                Отзывы
+                            </a>
+                        </li>
+                        <li class="footer__links-item">
+                            <a href="#" class="footer__link">
+                                Статьи
+                            </a>
+                        </li>
+                        <li class="footer__links-item">
+                            <a href="#" class="footer__link">
+                                Лицензии
+                            </a>
+                        </li>
+                        <li class="footer__links-item">
+                            <a href="#" class="footer__link">
+                                FAQ
+                            </a>
+                        </li>
+                        <li class="footer__links-item">
+                            <a href="#" class="footer__link">
+                                Наши филиалы
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__item">
+                    <p class="footer__item-title">
+                        Контакты
+                    </p>
+                    <ul class="footer__links">
+                        <li class="footer__links-item">
+                            <a href="tel:89581110433" class="footer__link">
+                                8 (958) 111-04-33
+                            </a>
+                        </li>
+                        <li class="footer__links-item">
+                            <a href="tel:88007078534" class="footer__link">
+                                8 (800) 707-85-34
+                            </a>
+                        </li>
+                        <li class="footer__links-item">
+                            <a href="mailto:info@target-med.ru" class="footer__link">
+                                info@target-med.ru
+                            </a>
+                        </li>
+                    </ul>
+                    <button class="footer__btn btn popup-btn" data-path="form">
+                        Заказать звонок
+                    </button>
+                    <ul class="footer__socials socials">
+                        <li class="socials__item social">
+                            <a href="#" target="_blank" class="social__link">
+                                <img src="assets/img/icons/socials/vk.svg" alt="" class="social__img"
+                                    aria-label="presentation">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer__copyright">
+            <div class="footer__copyright__container container">
+                <p class="footer__copyright-text">
+                    Вся информация на сайте не является публичной офертой, несёт сугубо информационный характер, и не
+                    служит для постановки диагноза и назначения лечения. Все права на сайт принадлежат частной
+                    коммерческой компании. На сайте не размещается реклама. Сайт использует cookies.
+                </p>
+            </div>
+        </div>
+    </footer>
     <div class="form-popup popup" data-target="form">
         <div class="popup__body">
             <div class="popup__content">

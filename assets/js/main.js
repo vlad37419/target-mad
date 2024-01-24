@@ -239,6 +239,70 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // documents slider
+    const documentsSliderList = document.querySelectorAll('.documents__slider');
+
+    if (documentsSliderList.length > 0) {
+        documentsSliderList.forEach((slider) => {
+            const documentsSlider = new Swiper(slider, {
+                spaceBetween: 15,
+                slidesPerView: 3,
+                navigation: {
+                    prevEl: slider.closest('.slider-wrapper').querySelector('.slider-btn_prev'),
+                    nextEl: slider.closest('.slider-wrapper').querySelector('.slider-btn_next'),
+                },
+                breakpoints: {
+                    0: {
+                        slidesPerView: 1.5,
+                    },
+                    576: {
+                        slidesPerView: 2.5,
+                    },
+                    1025: {
+                        slidesPerView: 3,
+                    },
+                }
+            });
+        });
+    }
+
+    // reviews slider
+    const reviewsSliderList = document.querySelectorAll('.reviews__slider');
+
+    if (reviewsSliderList.length > 0) {
+        reviewsSliderList.forEach((slider) => {
+            const reviewsSlider = new Swiper(slider, {
+                spaceBetween: 20,
+                slidesPerView: 3,
+                navigation: {
+                    prevEl: slider.closest('.slider-wrapper').querySelector('.slider-btn_prev'),
+                    nextEl: slider.closest('.slider-wrapper').querySelector('.slider-btn_next'),
+                },
+                breakpoints: {
+                    0: {
+                        slidesPerView: 1.2,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    1025: {
+                        slidesPerView: 3,
+                    },
+                }
+            });
+        });
+    }
+
+    // documents fancybox
+    Fancybox.bind('[data-fancybox="documents"]', {
+        placeFocusBack: false,
+    });
+
+    // gallery fancybox
+    Fancybox.bind('[data-fancybox="documents"]', {
+        placeFocusBack: false,
+    });
+
     AOS.init({
         once: true,
     });
