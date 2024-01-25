@@ -266,11 +266,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // reviews slider
-    const reviewsSliderList = document.querySelectorAll('.reviews__slider');
+    // slider 3 slides
+    const slider3SlidesList = document.querySelectorAll('.slider-3-slides');
 
-    if (reviewsSliderList.length > 0) {
-        reviewsSliderList.forEach((slider) => {
+    if (slider3SlidesList.length > 0) {
+        slider3SlidesList.forEach((slider) => {
             const reviewsSlider = new Swiper(slider, {
                 spaceBetween: 20,
                 slidesPerView: 3,
@@ -281,15 +281,115 @@ document.addEventListener('DOMContentLoaded', function () {
                 breakpoints: {
                     0: {
                         slidesPerView: 1.2,
+                        spaceBetween: 10,
                     },
                     576: {
                         slidesPerView: 2,
+                        paceBetween: 10,
                     },
                     1025: {
                         slidesPerView: 3,
+                        paceBetween: 20,
                     },
                 }
             });
+        });
+    }
+
+    // accordion
+    const ACCORDION_LIST = 'data-accordion-list'
+    const ACCORDION_BUTTON = 'data-accordion-button'
+    const ACCORDION_ARROW = 'data-accordion-arrow'
+    const ACCORDION_CONTENT = 'data-accordion-content'
+    const SECTION_OPENED = 'active'
+    const ICON_ROTATED = 'rotated'
+
+    class Accordion {
+        static apply(accordionNode) {
+            if (!accordionNode) {
+                return
+            }
+
+            const acc = new Accordion()
+            acc.accordion = accordionNode
+            accordionNode.onclick = acc.onClick.bind(acc)
+        }
+
+        handleClick(button) {
+            const innerSection = button.closest('.accor').querySelector('.accor-full');
+            const isOpened = innerSection.classList.contains(SECTION_OPENED)
+
+            if (isOpened) {
+                this.close(innerSection)
+                return
+            }
+            this.open(innerSection)
+        }
+
+        open(section) {
+            const accordion = section.querySelector(`[${ACCORDION_CONTENT}`).closest('.accor');
+            const accordionContent = section.querySelector(`[${ACCORDION_CONTENT}`)
+            const accordionList = accordionContent.querySelector(`[${ACCORDION_LIST}`)
+            const innerSectionHeight = accordionContent.clientHeight
+            let countOfScrollHeight = 0;
+            const allElementContentData = section.querySelectorAll(`[${ACCORDION_CONTENT}`)
+            accordion.classList.add(SECTION_OPENED)
+            section.classList.add(SECTION_OPENED)
+            this.rotateIconFor(section.previousElementSibling)
+
+            for (const item of allElementContentData) {
+                countOfScrollHeight = countOfScrollHeight + item.scrollHeight;
+            }
+
+            if (accordionContent.contains(accordionList)) {
+                section.style.maxHeight = `${innerSectionHeight + countOfScrollHeight}px`
+                return
+            }
+            section.style.maxHeight = `${innerSectionHeight}px`
+        }
+
+        close(section) {
+            const accordion = section.querySelector(`[${ACCORDION_CONTENT}`).closest('.accor');
+            section.style.maxHeight = 0
+            accordion.classList.remove(SECTION_OPENED)
+            section.classList.remove(SECTION_OPENED)
+            this.rotateIconFor(section.previousElementSibling)
+        }
+
+        rotateIconFor(button) {
+            const rotatedIconClass = ICON_ROTATED
+            const arrowElement = button.dataset.hasOwnProperty('accordionArrow') ?
+                button :
+                button.querySelector(`[${ACCORDION_ARROW}]`)
+
+            if (!arrowElement) {
+                return
+            }
+
+            const isOpened = arrowElement.classList.contains(rotatedIconClass)
+            if (!isOpened) {
+                arrowElement.classList.add(rotatedIconClass)
+                return
+            }
+            arrowElement.classList.remove(rotatedIconClass)
+        }
+
+        onClick(event) {
+            let button = event.target.closest(`[${ACCORDION_BUTTON}]`)
+            if (button && button.dataset.accordionButton !== undefined) {
+                this.handleClick(button)
+            }
+            setTimeout(() => {
+                AOS.refresh();
+            }, 500);
+        }
+    }
+
+    const accorWrapperList = document.querySelectorAll('.accor-wrapper');
+
+    if (accorWrapperList.length > 0) {
+        accorWrapperList.forEach(function (elem) {
+            Accordion.apply(elem);
         });
     }
 
