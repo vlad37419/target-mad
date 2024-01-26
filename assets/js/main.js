@@ -296,6 +296,180 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Tabs
+    class Tabs {
+        container;
+        tab_button_class;
+        tab_content_class;
+        tab_attribute_key;
+        tab_attribute_target;
+        tab_navigation_next;
+        tab_navigation_prev;
+        tab_active_name;
+
+        constructor({ container = '.tabs-container', tabs_wrapper_class = '.tabs__wrapper', button_class = '.tab', content_class = '.tab-content', attribute_key = 'path', attribute_target = 'target', nav_next = '.tabs__arrow_next', nav_prev = '.tabs__arrow_prev', name_active = '.tabs__active' } = {}) {
+            this.container = container;
+            this.tabs_wrapper_class = tabs_wrapper_class;
+            this.tab_button_class = button_class;
+            this.tab_content_class = content_class;
+            this.tab_attribute_key = attribute_key;
+            this.tab_attribute_target = attribute_target;
+            this.tab_navigation_next = nav_next;
+            this.tab_navigation_prev = nav_prev;
+            this.tab_active_name = name_active;
+        }
+
+        initTabs() {
+            document.querySelectorAll(this.container).forEach((wrapper) => {
+                this.initTabsWrapper(wrapper);
+            });
+        }
+
+        initTabsWrapper(wrapper) {
+            const tabsWrapper = wrapper.querySelector(this.tabs_wrapper_class);
+            const tabsButtonList = wrapper.querySelectorAll(this.tab_button_class);
+            const tabsContentList = wrapper.querySelectorAll(this.tab_content_class);
+            const tabsNavigationNext = wrapper.querySelector(this.tab_navigation_next);
+            const tabsNavigationPrev = wrapper.querySelector(this.tab_navigation_prev);
+            const tabActiveName = wrapper.querySelector(this.tab_active_name);
+            const tabsClose = document.querySelectorAll('.tabs__close');
+            let currentTab = 0;
+            if (tabActiveName) {
+                tabActiveName.querySelector('.tabs__active-text').textContent = tabsButtonList[currentTab].textContent;
+            }
+
+            for (let index = 0; index < tabsButtonList.length; index++) {
+                if (tabsButtonList[index].dataset.start === true) {
+                    currentTab = index;
+                }
+
+                tabsButtonList[index].addEventListener('click', () => {
+                    if (tabsContentList[index]) {
+                        currentTab = index;
+                        this.showTabsContent({
+                            list_tabs: tabsContentList,
+                            list_buttons: tabsButtonList,
+                            index: currentTab,
+                        });
+                        if (tabActiveName) {
+                            tabActiveName.querySelector('.tabs__active-text').textContent = tabsButtonList[index].textContent;
+                            tabActiveName.closest('.tabs').classList.remove('active');
+                            document.body.classList.remove('lock');
+                        }
+                        setTimeout(() => {
+                            AOS.refresh();
+                        }, 500);
+                    }
+                });
+            }
+
+            this.showTabsContent({
+                list_tabs: tabsContentList,
+                list_buttons: tabsButtonList,
+                index: currentTab,
+            });
+
+            if (tabsNavigationNext) {
+                tabsNavigationNext.addEventListener('click', () => {
+                    if (currentTab + 1 < tabsButtonList.length) {
+                        currentTab += 1;
+                    } else {
+                        currentTab = 0;
+                    }
+
+                    const tabsWrapperPositionX = tabsWrapper.getBoundingClientRect().left;
+                    const currentTabPositionX = tabsButtonList[currentTab].getBoundingClientRect().left;
+                    const currentTabPositionXRegardingParent = currentTabPositionX - tabsWrapperPositionX;
+
+                    tabsWrapper.scrollBy({
+                        left: currentTabPositionXRegardingParent,
+                        behavior: 'smooth'
+                    });
+
+                    this.showTabsContent({
+                        list_tabs: tabsContentList,
+                        list_buttons: tabsButtonList,
+                        index: currentTab,
+                    });
+                });
+            }
+
+            if (tabsNavigationPrev) {
+                tabsNavigationPrev.addEventListener('click', () => {
+                    if (currentTab - 1 >= 0) {
+                        currentTab -= 1;
+                    } else {
+                        currentTab = tabsButtonList.length - 1;
+                    }
+
+                    const tabsWrapperPositionX = tabsWrapper.getBoundingClientRect().left;
+                    const currentTabPositionX = tabsButtonList[currentTab].getBoundingClientRect().left;
+                    const currentTabPositionXRegardingParent = currentTabPositionX - tabsWrapperPositionX;
+
+                    tabsWrapper.scrollBy({
+                        left: currentTabPositionXRegardingParent,
+                        behavior: 'smooth'
+                    });
+
+                    this.showTabsContent({
+                        list_tabs: tabsContentList,
+                        list_buttons: tabsButtonList,
+                        index: currentTab,
+                    });
+                });
+            }
+
+            if (tabActiveName) {
+                tabActiveName.addEventListener('click', function () {
+                    tabActiveName.closest('.tabs').classList.add('active');
+                    document.body.classList.add('lock');
+                });
+            }
+
+            if (tabsClose.length > 0) {
+                for (let i = 0; i < tabsClose.length; i += 1) {
+                    const tabClose = tabsClose[i]
+                    tabClose.addEventListener('click', function () {
+                        tabClose.closest('.tabs').classList.remove('active');
+                        document.body.classList.remove('lock');
+                    });
+                }
+            }
+
+
+            tabsWrapper.closest('.tabs__container').addEventListener('click', function (e) {
+                if (!e.target.closest('.tabs__wrapper')) {
+                    tabsWrapper.closest('.tabs').classList.remove('active');
+                    document.body.classList.remove('lock');
+                }
+            });
+        }
+
+        hideTabsContent({ list_tabs, list_buttons }) {
+            list_buttons.forEach((el) => {
+                el.classList.remove('active');
+            });
+            list_tabs.forEach((el) => {
+                el.classList.remove('active');
+            });
+        }
+
+        showTabsContent({ list_tabs, list_buttons, index }) {
+            this.hideTabsContent({
+                list_tabs,
+                list_buttons
+            });
+
+            if (list_tabs[index]) {
+                list_tabs[index].classList.add('active');
+            }
+
+            if (list_buttons[index]) {
+                list_buttons[index].classList.add('active');
+            }
+        }
+    }
+
     // accordion
     const ACCORDION_LIST = 'data-accordion-list'
     const ACCORDION_BUTTON = 'data-accordion-button'
@@ -403,8 +577,142 @@ document.addEventListener('DOMContentLoaded', function () {
         placeFocusBack: false,
     });
 
+    // article-navigation
+    const articleNavigation = document.querySelector('.navigation-article');
+
+    if (articleNavigation) {
+        const jsScrollBlockList = document.querySelectorAll('.text-section h2, .text-section h3, .text-section h4, .text-section h5, .text-section h6');
+
+        if (jsScrollBlockList.length > 0) {
+            for (let i = 0; i < jsScrollBlockList.length; i += 1) {
+                const jsScrollBlock = jsScrollBlockList[i];
+                const titleBlock = jsScrollBlock.textContent;
+                const articleNavigationList = document.querySelector('.navigation-article__list');
+                const articleNavigationItem = document.createElement('li');
+                const articleNavigationLink = document.createElement('a');
+                articleNavigationItem.classList.add('navigation-article__item');
+                articleNavigationLink.classList.add('navigation-article__link');
+                jsScrollBlock.setAttribute('id', `${i}`)
+                articleNavigationLink.setAttribute('href', `#${i}`);
+                articleNavigationLink.textContent = ' ' + titleBlock;
+                articleNavigationItem.append(articleNavigationLink);
+                articleNavigationList.append(articleNavigationItem);
+            }
+
+            document.querySelectorAll('a[href^="#"').forEach(link => {
+
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    let href = this.getAttribute('href').substring(1);
+
+                    const scrollTarget = document.getElementById(href);
+
+                    // const topOffset = document.querySelector('.scrollto').offsetHeight;
+                    const topOffset = 180;
+                    const elementPosition = scrollTarget.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition - topOffset;
+
+                    window.scrollBy({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        } else {
+            articleNavigation.querySelector('.navigation-article__content').remove();
+            articleNavigation.querySelector('.navigation-article__wrapper').style.justifyContent = 'center';
+        }
+    }
+
+    // rating
+    const ratings = document.querySelectorAll('.rating');
+    const articleID = document.querySelector('[name="f_id_article"]');
+    let articleIDValue = '';
+    if (articleID) {
+        articleIDValue = articleID.value;
+    }
+
+    if (ratings.length > 0) {
+        initRatings();
+    }
+
+    function initRatings() {
+        let ratingActive, ratingValue, ratingText;
+
+        for (let i = 0; i < ratings.length; i += 1) {
+            const rating = ratings[i];
+            initRating(rating);
+        }
+    }
+
+    function initRating(rating) {
+        initRatingVars(rating);
+
+        setRatingActiveWidth();
+
+        if (rating.classList.contains('rating__set')) {
+            setRating(rating);
+        }
+    }
+
+    function initRatingVars(rating) {
+        ratingActive = rating.querySelector('.rating__active');
+        ratingValue = rating.querySelector('.rating__value');
+        ratingText = rating.querySelector('.rating__text');
+    }
+
+    function setRatingActiveWidth(index = ratingValue.innerHTML.replace(',', '.')) {
+        const ratingActiveWidth = index / 0.05;
+        ratingActive.style.width = `${ratingActiveWidth}%`;
+        if (ratingText) {
+            ratingText.innerHTML = `Рекомендуют ${Math.round(ratingActiveWidth)}%`
+        }
+    }
+
+    function setRating(rating) {
+        const ratingItems = rating.querySelectorAll('.rating__item');
+
+        for (let i = 0; i < ratingItems.length; i += 1) {
+            const ratingItem = ratingItems[i];
+
+            ratingItem.addEventListener('mouseenter', (e) => {
+                initRatingVars(rating);
+
+                setRatingActiveWidth(ratingItem.value);
+            });
+
+            ratingItem.addEventListener('mouseleave', (e) => {
+                setRatingActiveWidth();
+            });
+
+            ratingItem.addEventListener('click', (e) => {
+                ratingItems.forEach((elem) => {
+                    elem.style.pointerEvents = 'none';
+                });
+                initRatingVars(rating);
+
+                ratingValue.innerHTML = i + 1;
+                setRatingActiveWidth();
+
+                // const formData = new FormData;
+                // formData.append("ID_ARTICLE", articleIDValue);
+                // formData.append("RATING", ratingValue.innerHTML);
+
+                // fetch('/fetch/', {
+                //     method: 'POST',
+                //     body: formData,
+                // }).then(async (response) => {
+                //     let responseResult = await response.text();
+                //     console.log(responseResult);
+                // });
+            });
+        }
+    }
+
+    new Tabs().initTabs();
+    initPhoneMask();
     AOS.init({
         once: true,
     });
-    initPhoneMask();
 });
